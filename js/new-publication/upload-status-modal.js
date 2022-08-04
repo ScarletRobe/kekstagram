@@ -1,4 +1,5 @@
 import { isEscape } from '../utils.js';
+import {formKeydownHandler} from '../new-publication/new-publication-form.js';
 
 // Элементы DOM
 
@@ -26,6 +27,8 @@ const closeUploadSuccessMessage = () => {
 
   document.removeEventListener('keydown', messageKeydownHandler);
   document.removeEventListener('click', messageOutsideClickHandler);
+
+  document.addEventListener('keydown', formKeydownHandler);
 };
 
 /**

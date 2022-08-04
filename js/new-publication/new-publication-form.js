@@ -105,6 +105,8 @@ const successUploadHandler = () => {
 const failureUploadHandler = () => {
   showUploadStatusMessage(false);
   uploadSubmitBtnElement.disabled = false;
+
+  document.removeEventListener('keydown', formKeydownHandler);
 };
 
 /**
@@ -136,11 +138,11 @@ function formKeydownHandler (evt) {
   }
 }
 
+// Обработчики
+
 const addFileInputChangeHandler = () => fileInputElement.addEventListener('change', fileInputElementChangeHandler);
 
 const removeFileInputChangeHandler = () => fileInputElement.removeEventListener('change', fileInputElementChangeHandler);
-
-// Обработчики
 
 function fileInputElementChangeHandler() {
   openForm();
@@ -150,4 +152,5 @@ export {
   addFileInputChangeHandler,
   removeFileInputChangeHandler,
   closeForm,
+  formKeydownHandler
 };
