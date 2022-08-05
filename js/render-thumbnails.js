@@ -1,5 +1,7 @@
 import { initPublication } from './big-picture-mode/big-picture-mode.js';
 
+import { toggleLike } from './big-picture-mode/new-like.js';
+
 const thumbnailTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainerElement = document.querySelector('.pictures');
 
@@ -44,7 +46,11 @@ const initThumbnails = (publications) => {
 function getThumbnailsContainerClickHandler (publications) {
   return (evt) => {
     if (evt.target.closest('.picture') !== null) {
-      initPublication(publications.find((publication) => publication.id === Number(evt.target.closest('.picture').dataset.id)));
+      if (evt.target.matches('.picture__likes')) {
+        toggleLike(publications.find((publication) => publication.id === Number(evt.target.closest('.picture').dataset.id)));
+      } else {
+        initPublication(publications.find((publication) => publication.id === Number(evt.target.closest('.picture').dataset.id)));
+      }
     }
   };
 }
