@@ -7,7 +7,10 @@ import {
 
 import { createComment } from './new-comment.js';
 
+import { toggleLike } from './new-like.js';
+
 const COMMENTS_PORTION_LENGTH = 5;
+const ACTIVE_CLASS = 'likes-count--active';
 
 let publication;
 let loadedComments = 0;
@@ -26,8 +29,9 @@ const commentsLoaderElement = modalWindowElement.querySelector('.comments-loader
 
 const closeBtnElement = modalWindowElement.querySelector('#picture-cancel');
 
-const newCommentFormElement = document.querySelector('#create-new-comment');
-const newCommentInputElement = document.querySelector('.social__footer-text');
+const newCommentFormElement = modalWindowElement.querySelector('#create-new-comment');
+const newCommentInputElement = modalWindowElement.querySelector('.social__footer-text');
+
 
 const commentTemplate = commentsElement[0];
 commentsElement.forEach((comment) => comment.remove());
@@ -78,6 +82,11 @@ const fillModal = () => {
 
   bigPhotoElement.src = publication.url;
   likesCountElement.textContent = publication.likes;
+  if (publication.isLiked === true) {
+    likesCountElement.classList.add(ACTIVE_CLASS);
+  } else {
+    likesCountElement.classList.remove(ACTIVE_CLASS);
+  }
   commentsAmountElement.textContent = publication.comments.length;
   loadCommentsPortion(COMMENTS_PORTION_LENGTH);
   descriptionElement.textContent = publication.description;
@@ -95,6 +104,7 @@ const closeModal = () => {
   commentsLoaderElement.removeEventListener('click', commentsLoaderElementClickHandler);
   document.removeEventListener('keydown', modalKeydownHandler);
   newCommentFormElement.removeEventListener('submit', createCommentButtonClickHandler);
+  likesCountElement.removeEventListener('click', addLikeClickHandler);
 
   commentsContainerElement.innerHTML = '';
 };
@@ -113,6 +123,7 @@ const openModal = () => {
   closeBtnElement.addEventListener('click', closeBtnElementClickHandler);
   document.addEventListener('keydown', modalKeydownHandler);
   newCommentFormElement.addEventListener('submit', createCommentButtonClickHandler);
+  likesCountElement.addEventListener('click', addLikeClickHandler);
 
   fillModal();
 };
@@ -138,6 +149,11 @@ function createCommentButtonClickHandler(evt) {
     commentsAmountElement.textContent = publication.comments.length;
     document.querySelector(`.picture[data-id="${publication.id}"] .picture__comments`).textContent++;
   }
+}
+
+function addLikeClickHandler (evt) {
+  evt.preventDefault();
+  toggleLike(publication);
 }
 
 function closeBtnElementClickHandler() {
