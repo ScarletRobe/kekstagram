@@ -1,8 +1,12 @@
 import { fillComments } from './big-picture-mode.js';
 
+// Элементы DOM
+
 const newCommentFormElement = document.querySelector('#create-new-comment');
 const commentInputElement = newCommentFormElement.querySelector('.social__footer-text');
 const commentsContainerElement = document.querySelector('.social__comments');
+
+//
 
 /**
  * Создает элемент с информацией о новом комментарии, добавляет его на страницу

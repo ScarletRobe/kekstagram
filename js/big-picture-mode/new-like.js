@@ -1,6 +1,12 @@
-const likesCounterElement = document.querySelector('.likes-count');
+// Переменные
 
 const ACTIVE_CLASS = 'likes-count--active';
+
+// Элементы DOM
+
+const likesCounterElement = document.querySelector('.likes-count');
+
+//
 
 /**
  * Добавляет визуал при нажатии на лайк. Актуализирует кол-во лайков.

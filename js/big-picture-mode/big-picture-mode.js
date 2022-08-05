@@ -9,11 +9,15 @@ import { createComment } from './new-comment.js';
 
 import { toggleLike } from './new-like.js';
 
+// Переменные
+
 const COMMENTS_PORTION_LENGTH = 5;
 const ACTIVE_CLASS = 'likes-count--active';
 
 let publication;
 let loadedComments = 0;
+
+// Элементы DOM
 
 const modalWindowElement = document.querySelector('.big-picture');
 const bigPhotoElement = modalWindowElement.querySelector('.big-picture__img img');
@@ -135,6 +139,7 @@ const initPublication = (data) => {
 
 
 // Обработчики
+
 /**
  * Обрабатывает создание нового комментария. Обновляет БД и отображения кол-ва комментариев.
  * @param {object} evt - event
@@ -151,6 +156,10 @@ function createCommentButtonClickHandler(evt) {
   }
 }
 
+/**
+ * Обрабатывает нажатие на лайк
+ * @param {object} evt - event
+ */
 function addLikeClickHandler (evt) {
   evt.preventDefault();
   toggleLike(publication);
