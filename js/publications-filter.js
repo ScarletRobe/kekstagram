@@ -50,15 +50,11 @@ const showRandomPosts = (publications) => {
  * @param {publications} publications - массив публикаций
  * @returns - функция, отображающая отсортированные публикации
  */
-const sortPosts = (publications) => {
+const showMostDiscussedPosts = (publications) => {
   const sortedPublications = publications.slice().sort((a, b) => b.comments.length - a.comments.length);
-  return () => renderThumbnails(sortedPublications);
-};
 
-/**
- * Отображает отсортированные публикации
- */
-let showMostDiscussedPosts;
+  renderThumbnails(sortedPublications);
+};
 
 //
 
@@ -76,7 +72,7 @@ const changeFilter = (publications, evt) => {
       showRandomPosts(publications);
       break;
     case FilterNames.DISSCUSED:
-      showMostDiscussedPosts();
+      showMostDiscussedPosts(publications);
       break;
   }
 };
@@ -88,8 +84,6 @@ const changeFilter = (publications, evt) => {
 const initFilters = (publications) => {
   filtersContainerElement.classList.remove('img-filters--inactive');
   filtersFormElement.addEventListener('click', addfiltersFormClickHandler(publications));
-
-  showMostDiscussedPosts = sortPosts(publications);
 };
 
 // Обработчики
