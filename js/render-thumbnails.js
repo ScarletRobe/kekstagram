@@ -1,4 +1,4 @@
-import { initPublication } from './big-picture-mode.js';
+import { initPublication } from './big-picture-mode/big-picture-mode.js';
 
 const thumbnailTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainerElement = document.querySelector('.pictures');

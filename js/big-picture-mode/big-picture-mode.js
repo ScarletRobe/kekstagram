@@ -1,9 +1,11 @@
-import { isEscape } from './utils.js';
+import { isEscape } from '../utils.js';
 
 import {
   addFileInputChangeHandler,
   removeFileInputChangeHandler,
-} from './new-publication/new-publication-form.js';
+} from '../new-publication/new-publication-form.js';
+
+import { createComment } from './new-comment.js';
 
 const COMMENTS_PORTION_LENGTH = 5;
 
@@ -23,6 +25,9 @@ const loadedCommentsAmountElement = commentsCountElement.querySelector('.loaded-
 const commentsLoaderElement = modalWindowElement.querySelector('.comments-loader');
 
 const closeBtnElement = modalWindowElement.querySelector('#picture-cancel');
+
+const newCommentFormElement = document.querySelector('#create-new-comment');
+const newCommentInputElement = document.querySelector('.social__footer-text');
 
 const commentTemplate = commentsElement[0];
 commentsElement.forEach((comment) => comment.remove());
@@ -44,13 +49,13 @@ const fillComments = (commentsList) => {
     commentsFragment.appendChild(newComment);
   });
 
-  commentsContainerElement.appendChild(commentsFragment);
+  return commentsFragment;
 };
 
-const loadCommentsPortion = () => {
-  fillComments(publication.comments.slice(loadedComments, loadedComments + COMMENTS_PORTION_LENGTH));
+const loadCommentsPortion = (portionAmount) => {
+  commentsContainerElement.appendChild(fillComments(publication.comments.slice(loadedComments, loadedComments + portionAmount)));
 
-  loadedComments += COMMENTS_PORTION_LENGTH;
+  loadedComments += portionAmount;
 
   if (publication.comments.length > loadedComments) {
     commentsLoaderElement.classList.remove('hidden');
@@ -74,7 +79,7 @@ const fillModal = () => {
   bigPhotoElement.src = publication.url;
   likesCountElement.textContent = publication.likes;
   commentsAmountElement.textContent = publication.comments.length;
-  loadCommentsPortion();
+  loadCommentsPortion(COMMENTS_PORTION_LENGTH);
   descriptionElement.textContent = publication.description;
 };
 
@@ -89,6 +94,8 @@ const closeModal = () => {
   closeBtnElement.removeEventListener('click', closeBtnElementClickHandler);
   commentsLoaderElement.removeEventListener('click', commentsLoaderElementClickHandler);
   document.removeEventListener('keydown', modalKeydownHandler);
+  newCommentFormElement.removeEventListener('submit', createCommentButtonClickHandler);
+
   commentsContainerElement.innerHTML = '';
 };
 
@@ -105,6 +112,8 @@ const openModal = () => {
   commentsLoaderElement.addEventListener('click', commentsLoaderElementClickHandler);
   closeBtnElement.addEventListener('click', closeBtnElementClickHandler);
   document.addEventListener('keydown', modalKeydownHandler);
+  newCommentFormElement.addEventListener('submit', createCommentButtonClickHandler);
+
   fillModal();
 };
 
@@ -113,14 +122,30 @@ const initPublication = (data) => {
   openModal();
 };
 
+
 // Обработчики
+/**
+ * Обрабатывает создание нового комментария. Обновляет БД и отображения кол-ва комментариев.
+ * @param {object} evt - event
+ */
+function createCommentButtonClickHandler(evt) {
+  evt.preventDefault();
+  if (newCommentInputElement.value !== '') {
+    publication.comments.unshift(createComment(Math.max(publication.comments[0].id, publication.comments[publication.comments.length - 1].id)));
+
+    loadedComments++;
+    loadedCommentsAmountElement.textContent = loadedComments;
+    commentsAmountElement.textContent = publication.comments.length;
+    document.querySelector(`.picture[data-id="${publication.id}"] .picture__comments`).textContent++;
+  }
+}
 
 function closeBtnElementClickHandler() {
   closeModal();
 }
 
 function commentsLoaderElementClickHandler() {
-  loadCommentsPortion();
+  loadCommentsPortion(COMMENTS_PORTION_LENGTH);
 }
 
 /**
@@ -134,4 +159,7 @@ function modalKeydownHandler (evt) {
   }
 }
 
-export { initPublication };
+export {
+  initPublication,
+  fillComments,
+};

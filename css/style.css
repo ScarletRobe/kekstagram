@@ -1052,6 +1052,11 @@ main {
   padding: 15px;
 }
 
+.social__form {
+  width: 100%;
+  display: flex;
+}
+
 .social__footer-commentor {
   display: block;
 

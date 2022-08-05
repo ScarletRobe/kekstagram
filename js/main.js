@@ -19,3 +19,5 @@ getData(
 );
 
 addFileInputChangeHandler();
+
+import './big-picture-mode/new-comment.js';

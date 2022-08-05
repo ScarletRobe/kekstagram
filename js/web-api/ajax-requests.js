@@ -1,5 +1,5 @@
 const GET_FROM = 'https://26.javascript.pages.academy/kekstagram/data';
-const SEND_TO = 'https://26.javascript.pages.academy/kekstagam';
+const SEND_TO = 'https://26.javascript.pages.academy/kekstagram';
 const POST = 'POST';
 
 /**
