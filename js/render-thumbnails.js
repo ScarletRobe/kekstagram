@@ -20,6 +20,9 @@ const renderThumbnails = (publications) => {
     newThumbnail.querySelector('.picture__img').src = publication.url;
     newThumbnail.querySelector('.picture__likes').textContent = publication.likes;
     newThumbnail.querySelector('.picture__comments').textContent = publication.comments.length;
+    if (publication.isLiked) {
+      newThumbnail.querySelector(`.picture[data-id="${publication.id}"] .picture__likes`).classList.add('picture__likes--active');
+    }
 
     thumbnailsFragment.appendChild(newThumbnail);
   });

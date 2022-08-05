@@ -13,9 +13,7 @@ const likesCounterElement = document.querySelector('.likes-count');
  * @param {object} publication - публикация
  */
 const toggleLike = (publication) => {
-  const likesElement = document.querySelector(`.picture[data-id="${publication.id}"] .picture__likes`);
-
-  if (likesElement.classList.contains(ACTIVE_CLASS)) {
+  if (publication.isLiked) {
     --likesCounterElement.textContent;
     publication.isLiked = false;
     --publication.likes;
@@ -30,9 +28,7 @@ const toggleLike = (publication) => {
     ++document.querySelector(`.picture[data-id="${publication.id}"] .picture__likes`).textContent;
     document.querySelector(`.picture[data-id="${publication.id}"] .picture__likes`).classList.add('picture__likes--active');
     likesCounterElement.classList.add(ACTIVE_CLASS);
-
   }
-  likesElement.classList.toggle(ACTIVE_CLASS);
 };
 
 export { toggleLike };
