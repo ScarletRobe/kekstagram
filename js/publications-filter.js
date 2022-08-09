@@ -12,6 +12,7 @@ const FilterNames = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISSCUSED: 'filter-discussed',
+  LIKED: 'filter-liked'
 };
 
 // Элементы DOM
@@ -56,6 +57,11 @@ const showMostDiscussedPosts = (publications) => {
   renderThumbnails(sortedPublications);
 };
 
+const showLikedPosts = (publications) => {
+  const likedPublications = publications.filter((publication) => publication.isLiked);
+  renderThumbnails(likedPublications);
+};
+
 //
 
 /**
@@ -73,6 +79,9 @@ const changeFilter = (publications, evt) => {
       break;
     case FilterNames.DISSCUSED:
       showMostDiscussedPosts(publications);
+      break;
+    case FilterNames.LIKED:
+      showLikedPosts(publications);
       break;
   }
 };
