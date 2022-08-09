@@ -49,6 +49,7 @@ const initThumbnails = (publications) => {
 function getThumbnailsContainerClickHandler (publications) {
   return (evt) => {
     if (evt.target.closest('.picture') !== null) {
+      evt.preventDefault();
       if (evt.target.matches('.picture__likes')) {
         toggleLike(publications.find((publication) => publication.id === Number(evt.target.closest('.picture').dataset.id)));
       } else {
