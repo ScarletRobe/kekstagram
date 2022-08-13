@@ -1,4 +1,5 @@
 import { renderThumbnails } from '../render-thumbnails.js';
+import { resetFilter } from '../publications-filter.js';
 
 const effects = {
   chrome: {
@@ -53,6 +54,7 @@ const createNewPublication = (formData) => {
   };
   publications.push(publication);
   renderThumbnails(publications);
+  resetFilter();
   publication.effects = applyEffects(formData, publications.length - 1);
 };
 

@@ -86,6 +86,11 @@ const changeFilter = (publications, evt) => {
   }
 };
 
+const resetFilter = () => {
+  filterBtnsElements.forEach((btn) => btn.classList.remove('img-filters__button--active'));
+  document.querySelector('#filter-default').classList.add('img-filters__button--active');
+};
+
 /**
  * Подключает фильтрацию публикаций
  * @param {array} publications - массив публикаций
@@ -115,4 +120,7 @@ function addfiltersFormClickHandler(publications) {
   };
 }
 
-export { initFilters };
+export {
+  initFilters,
+  resetFilter
+};
