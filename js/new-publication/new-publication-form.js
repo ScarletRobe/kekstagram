@@ -18,6 +18,8 @@ import {
 
 import { sendUploadFormData } from '../web-api/ajax-requests.js';
 
+import { createNewPublication } from './new-publication-render.js';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 // Элементы DOM
@@ -97,9 +99,13 @@ function cancelBtnElementClickHandler() {
   closeForm();
 }
 
-const successUploadHandler = () => {
-  showUploadStatusMessage(true);
-  closeForm(true);
+const successUploadHandler = (data) => {
+  const formData = data;
+  return () => {
+    createNewPublication(formData);
+    showUploadStatusMessage(true);
+    closeForm(true);
+  };
 };
 
 const failureUploadHandler = () => {
@@ -116,10 +122,10 @@ const failureUploadHandler = () => {
 function formSubmitHandler (evt) {
   evt.preventDefault();
   if (validateUploadForm()) {
+    const formData = new FormData(formElement);
     uploadSubmitBtnElement.disabled = true;
     uploadSubmitBtnElement.textContent = 'Ваша фотография публикуется...';
-
-    sendUploadFormData(new FormData(formElement), successUploadHandler, failureUploadHandler);
+    sendUploadFormData(formData, successUploadHandler(formData), failureUploadHandler);
 
     uploadSubmitBtnElement.textContent = 'Опубликовать';
   }
