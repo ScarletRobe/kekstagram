@@ -91,6 +91,11 @@ const fillModal = () => {
   } else {
     likesCountElement.classList.remove(ACTIVE_CLASS);
   }
+  if (publication.effects) {
+    for (const effect in publication.effects) {
+      bigPhotoElement.style[effect] = publication.effects[effect];
+    }
+  } else { bigPhotoElement.style = ''; }
   commentsAmountElement.textContent = publication.comments.length;
   loadCommentsPortion(COMMENTS_PORTION_LENGTH);
   descriptionElement.textContent = publication.description;

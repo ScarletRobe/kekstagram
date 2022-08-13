@@ -23,6 +23,11 @@ const renderThumbnails = (publications) => {
     if (publication.isLiked) {
       newThumbnail.querySelector(`.picture[data-id="${publication.id}"] .picture__likes`).classList.add('picture__likes--active');
     }
+    if (publication.effects) {
+      for (const effect in publication.effects) {
+        newThumbnail.querySelector('.picture__img').style[effect] = publication.effects[effect];
+      }
+    }
 
     thumbnailsFragment.appendChild(newThumbnail);
   });
