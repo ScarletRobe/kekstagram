@@ -152,8 +152,11 @@ const initPublication = (data) => {
 function createCommentButtonClickHandler(evt) {
   evt.preventDefault();
   if (newCommentInputElement.value !== '') {
-    publication.comments.unshift(createComment(Math.max(publication.comments[0].id, publication.comments[publication.comments.length - 1].id)));
-
+    if (!publication.comments.length) {
+      publication.comments = [createComment(0)];
+    } else {
+      publication.comments.unshift(createComment(Math.max(publication.comments[0].id, publication.comments[publication.comments.length - 1].id)));
+    }
     loadedComments++;
     loadedCommentsAmountElement.textContent = loadedComments;
     commentsAmountElement.textContent = publication.comments.length;
